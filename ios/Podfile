@@ -10,6 +10,8 @@ target 'StudentCouncil' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNToastNative', :path => '../node_modules/react-native-toast-native'
+
   target 'StudentCouncilTests' do
     inherit! :complete
     # Pods for testing

@@ -5,7 +5,6 @@ import ReduxThunk from 'redux-thunk';
 
 import reducers from './reducer/';
 import RouterComponent from './routes/Router';
-import {create} from 'react-test-renderer';
 
 class App extends Component {
   UNSAFE_componentWillMount() {}
