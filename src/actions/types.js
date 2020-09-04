@@ -10,3 +10,10 @@ export const FORGOT_PASSWORD_RESET = 'forgot_password_reset';
 export const SCAN_SUCCESS = 'scan_success';
 export const SCAN_DEFAULT = 'scan_default';
 export const SCAN_FAIL = 'scan_fail';
+
+export const LOGIN_EMAIL_CHANGED = 'login_email_changed';
+export const LOGIN_PASSWORD_CHANGED = 'login_password_changed';
+export const LOGIN_SUCCESS = 'login_success';
+export const LOGIN_FAILED = 'login_failed';
+export const LOGIN_LOADER = 'login_loader';
+export const LOGIN_RESET = 'login_reset';

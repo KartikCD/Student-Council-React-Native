@@ -1,7 +1,9 @@
 import React from 'react';
-import {Scene, Router} from 'react-native-router-flux';
+import {AsyncStorage} from 'react-native';
+import {Scene, Router, Actions} from 'react-native-router-flux';
 
 import HomePage from '../pages/HomePage';
+import LoginPage from '../pages/LoginPage';
 
 const RouterComponent = () => {
   return (
@@ -14,13 +16,24 @@ const RouterComponent = () => {
             title="Home"
             rightTitle="Logout"
             onRight={() => {
-              console.log('Error');
+              try {
+                AsyncStorage.setItem('USERNAME', '');
+                AsyncStorage.setItem('IS_LOGIN', false);
+              } catch (err) {
+                console.log(err);
+              }
+              Actions.loginscreen();
             }}
           />
+        </Scene>
+        <Scene key="loginscreen" initial>
+          <Scene key="login" component={LoginPage} title="Login" />
         </Scene>
       </Scene>
     </Router>
   );
 };
+
+const onLogout = () => {};
 
 export default RouterComponent;
