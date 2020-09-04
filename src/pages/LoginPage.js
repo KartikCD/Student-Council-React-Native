@@ -12,13 +12,6 @@ import {
 } from '../actions/';
 
 class LoginForm extends Component {
-  componentDidMount() {
-    setTimeout(() => {
-      console.log('Error');
-    }, 4000);
-  }
-  UNSAFE_componentWillMount() {}
-
   onEmailAddressChange(text) {
     this.props.loginEmailChanged(text);
   }

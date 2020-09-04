@@ -4,6 +4,7 @@ import {Scene, Router, Actions} from 'react-native-router-flux';
 
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
+import SplashScreen from '../pages/SplashScreen';
 
 const RouterComponent = () => {
   return (
@@ -15,19 +16,22 @@ const RouterComponent = () => {
             component={HomePage}
             title="Home"
             rightTitle="Logout"
-            onRight={() => {
+            onRight={async () => {
               try {
-                AsyncStorage.setItem('USERNAME', '');
-                AsyncStorage.setItem('IS_LOGIN', false);
+                await AsyncStorage.setItem('USERNAME', '');
+                await AsyncStorage.setItem('IS_LOGIN', 'false');
+                Actions.loginscreen();
               } catch (err) {
                 console.log(err);
               }
-              Actions.loginscreen();
             }}
           />
         </Scene>
-        <Scene key="loginscreen" initial>
+        <Scene key="loginscreen">
           <Scene key="login" component={LoginPage} title="Login" />
+        </Scene>
+        <Scene key="splashscreen" initial>
+          <Scene key="splash" component={SplashScreen} hideNavBar={true} />
         </Scene>
       </Scene>
     </Router>

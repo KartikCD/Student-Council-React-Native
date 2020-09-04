@@ -36,12 +36,12 @@ export const loginUser = ({email, password}) => {
           password: password,
         },
       })
-      .then((response) => {
+      .then(async (response) => {
         console.log('I am here');
         if (response.data.status === 'SUCCESS') {
           try {
-            AsyncStorage.setItem('USERNAME', response.data.message);
-            AsyncStorage.setItem('IS_LOGIN', true);
+            await AsyncStorage.setItem('USERNAME', response.data.message);
+            await AsyncStorage.setItem('IS_LOGIN', 'true');
           } catch (error) {
             console.log(error);
           }
