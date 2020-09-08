@@ -23,3 +23,13 @@ export const LOGIN_RESET = 'login_reset';
 export const ACCESS_LIST = 'list_received';
 export const LIST_ACCESS_FAILED = 'list_access_failed';
 export const ON_LIST_VALUE_CHANGE = 'on_list_value_change';
+
+//Registration Actions
+export const REGISTER_NAME_CHANGED = 'register_name_changed';
+export const REGISTER_EMAIL_CHANGED = 'register_email_changed';
+export const REGISTER_MOBILE_CHANGED = 'register_mobile_changed';
+export const REGISTER_COLLEGE_CHANGED = 'register_college_changed';
+export const REGISTER_ONLIST_ACCESS = 'register_onlist_access';
+export const REGISTER_ERROR = 'register_error';
+export const REGISTER_ONPICKER_VALUE_CHANGE = 'register_onpicker_value_change';
+export const REGISTER_ONPAID_CHANGE = 'register_onpaid_change';

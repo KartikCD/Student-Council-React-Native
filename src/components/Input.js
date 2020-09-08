@@ -8,6 +8,8 @@ const Input = ({
   placeholder,
   secureTextEntry,
   onEndEditing,
+  keyboardType,
+  editable,
 }) => {
   const {inputStyle, labelStyle, containerStyle} = styles;
 
@@ -22,6 +24,8 @@ const Input = ({
         value={value}
         onEndEditing={onEndEditing}
         placeholder={placeholder}
+        keyboardType={keyboardType}
+        editable={editable}
       />
     </View>
   );

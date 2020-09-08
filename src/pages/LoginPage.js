@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, Alert, View, Keyboard, Image} from 'react-native';
+import {Text, StyleSheet, View, Keyboard, Image} from 'react-native';
 import {connect} from 'react-redux';
 import Toast from 'react-native-toast-native';
 

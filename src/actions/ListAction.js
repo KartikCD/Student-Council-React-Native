@@ -1,4 +1,3 @@
-import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 
 import {BASE_URL} from '../constants/Constants';

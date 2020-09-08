@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {Text, Picker, StyleSheet, FlatList} from 'react-native';
 import {connect} from 'react-redux';
-import axios from 'axios';
 
 import {accessEventsList, onEventValueChange} from '../../actions/';
-import {Card, CardSection, Input, Button, ListItem} from '../../components/';
-import {BASE_URL} from '../../constants/Constants';
+import {Card, CardSection, ListItem} from '../../components/';
 
 class RegistrationLists extends Component {
   componentDidMount() {
@@ -52,8 +50,6 @@ class RegistrationLists extends Component {
   }
 
   renderList() {
-    const {list, registrationsReceived, registrationList} = this.props;
-    console.log(list, registrationsReceived, registrationList);
     if (this.props.registrationsReceived) {
       return (
         <CardSection style={{padding: 1, flexDirection: 'column'}}>
@@ -91,74 +87,6 @@ class RegistrationLists extends Component {
       );
     }
   }
-
-  // getList() {
-  //   return axios.get(BASE_URL + '/getregistry.php', {
-  //     params: {
-  //       event: this.props.selectedPicker,
-  //     },
-  //   });
-  // }
-
-  // async renderList() {
-  //   await this.getList()
-  //     .then((response) => {
-  //       console.log(response.data.registration_details);
-  //       if (response.data.registration_details.length === 0) {
-  //         return (
-  //           <CardSection>
-  //             <Text
-  //               style={{
-  //                 fontSize: 18,
-  //                 paddingLeft: 5,
-  //                 paddingBottom: 10,
-  //                 fontWeight: 'bold',
-  //                 alignSelf: 'center',
-  //               }}>
-  //               No registrations for this event!
-  //             </Text>
-  //           </CardSection>
-  //         );
-  //       } else {
-  //         return (
-  //           <CardSection style={{padding: 1}}>
-  //             <Text
-  //               style={{
-  //                 fontSize: 16,
-  //                 paddingLeft: 5,
-  //                 paddingBottom: 10,
-  //                 fontWeight: 'bold',
-  //               }}>
-  //               Registrations
-  //             </Text>
-
-  //             <FlatList
-  //               data={response.data.registration_details}
-  //               renderItem={({item}) => this.plotData(item)}
-  //               keyExtractor={(item) => item.id.toString()}
-  //             />
-  //           </CardSection>
-  //         );
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       return (
-  //         <CardSection>
-  //           <Text
-  //             style={{
-  //               fontSize: 18,
-  //               paddingLeft: 5,
-  //               paddingBottom: 10,
-  //               fontWeight: 'bold',
-  //               alignSelf: 'center',
-  //             }}>
-  //             No registrations for this event!
-  //           </Text>
-  //         </CardSection>
-  //       );
-  //     });
-  // }
 
   render() {
     return (
