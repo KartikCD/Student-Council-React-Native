@@ -51,73 +51,114 @@ class RegistrationLists extends Component {
     return <ListItem data={item} />;
   }
 
-  getList() {
-    return axios.get(BASE_URL + '/getregistry.php', {
-      params: {
-        event: this.props.selectedPicker,
-      },
-    });
+  renderList() {
+    const {list, registrationsReceived, registrationList} = this.props;
+    console.log(list, registrationsReceived, registrationList);
+    if (this.props.registrationsReceived) {
+      return (
+        <CardSection style={{padding: 1, flexDirection: 'column'}}>
+          <Text
+            style={{
+              fontSize: 16,
+              paddingLeft: 5,
+              paddingBottom: 10,
+              fontWeight: 'bold',
+            }}>
+            Registrations
+          </Text>
+
+          <FlatList
+            data={this.props.registrationList}
+            renderItem={({item}) => this.plotData(item)}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </CardSection>
+      );
+    } else {
+      return (
+        <CardSection>
+          <Text
+            style={{
+              fontSize: 18,
+              paddingLeft: 5,
+              paddingBottom: 10,
+              fontWeight: 'bold',
+              alignSelf: 'center',
+            }}>
+            No registrations for this event!
+          </Text>
+        </CardSection>
+      );
+    }
   }
 
-  async renderList() {
-    await this.getList()
-      .then((response) => {
-        console.log(response.data.registration_details);
-        if (response.data.registration_details.length === 0) {
-          return (
-            <CardSection>
-              <Text
-                style={{
-                  fontSize: 18,
-                  paddingLeft: 5,
-                  paddingBottom: 10,
-                  fontWeight: 'bold',
-                  alignSelf: 'center',
-                }}>
-                No registrations for this event!
-              </Text>
-            </CardSection>
-          );
-        } else {
-          return (
-            <CardSection style={{padding: 1}}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  paddingLeft: 5,
-                  paddingBottom: 10,
-                  fontWeight: 'bold',
-                }}>
-                Registrations
-              </Text>
+  // getList() {
+  //   return axios.get(BASE_URL + '/getregistry.php', {
+  //     params: {
+  //       event: this.props.selectedPicker,
+  //     },
+  //   });
+  // }
 
-              <FlatList
-                data={response.data.registration_details}
-                renderItem={({item}) => this.plotData(item)}
-                keyExtractor={(item) => item.id.toString()}
-              />
-            </CardSection>
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        return (
-          <CardSection>
-            <Text
-              style={{
-                fontSize: 18,
-                paddingLeft: 5,
-                paddingBottom: 10,
-                fontWeight: 'bold',
-                alignSelf: 'center',
-              }}>
-              No registrations for this event!
-            </Text>
-          </CardSection>
-        );
-      });
-  }
+  // async renderList() {
+  //   await this.getList()
+  //     .then((response) => {
+  //       console.log(response.data.registration_details);
+  //       if (response.data.registration_details.length === 0) {
+  //         return (
+  //           <CardSection>
+  //             <Text
+  //               style={{
+  //                 fontSize: 18,
+  //                 paddingLeft: 5,
+  //                 paddingBottom: 10,
+  //                 fontWeight: 'bold',
+  //                 alignSelf: 'center',
+  //               }}>
+  //               No registrations for this event!
+  //             </Text>
+  //           </CardSection>
+  //         );
+  //       } else {
+  //         return (
+  //           <CardSection style={{padding: 1}}>
+  //             <Text
+  //               style={{
+  //                 fontSize: 16,
+  //                 paddingLeft: 5,
+  //                 paddingBottom: 10,
+  //                 fontWeight: 'bold',
+  //               }}>
+  //               Registrations
+  //             </Text>
+
+  //             <FlatList
+  //               data={response.data.registration_details}
+  //               renderItem={({item}) => this.plotData(item)}
+  //               keyExtractor={(item) => item.id.toString()}
+  //             />
+  //           </CardSection>
+  //         );
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       return (
+  //         <CardSection>
+  //           <Text
+  //             style={{
+  //               fontSize: 18,
+  //               paddingLeft: 5,
+  //               paddingBottom: 10,
+  //               fontWeight: 'bold',
+  //               alignSelf: 'center',
+  //             }}>
+  //             No registrations for this event!
+  //           </Text>
+  //         </CardSection>
+  //       );
+  //     });
+  // }
 
   render() {
     return (
@@ -142,6 +183,8 @@ const mapStateToProps = (state) => {
     dataReceived: state.registrations.dataReceived,
     listError: state.registrations.listError,
     selectedPicker: state.registrations.selectedPicker,
+    registrationsReceived: state.registrations.registrationsReceived,
+    registrationList: state.registrations.registrationList,
   };
 };
 

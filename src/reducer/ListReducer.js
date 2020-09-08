@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   lists: null,
   dataReceived: false,
   listError: false,
-  selectedPicker: 'BRAINIACS (3 MEMBERS)',
+  selectedPicker: 'All',
   registrationsReceived: false,
   registrationList: null,
 };
@@ -21,6 +21,9 @@ export default (state = INITIAL_STATE, action) => {
         lists: action.payload,
         dataReceived: true,
         listError: false,
+        selectedPicker: action.pickedValue,
+        registrationList: action.list,
+        registrationsReceived: true,
       };
 
     case LIST_ACCESS_FAILED:
@@ -28,13 +31,15 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         listError: true,
         dataReceived: false,
-        selectedPicker: '',
+        registrationsReceived: false,
       };
 
     case ON_LIST_VALUE_CHANGE:
       return {
         ...state,
-        selectedPicker: action.payload,
+        registrationList: action.list,
+        selectedPicker: action.pickedValue,
+        registrationsReceived: true,
       };
 
     default:
