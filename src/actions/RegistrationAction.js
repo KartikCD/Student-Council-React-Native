@@ -1,6 +1,7 @@
 import {Actions} from 'react-native-router-flux';
 import axois from 'axios';
 import {AsyncStorage} from 'react-native';
+import qs from 'query-string';
 
 import {
   REGISTER_NAME_CHANGED,
@@ -11,6 +12,10 @@ import {
   REGISTER_ERROR,
   REGISTER_ONPICKER_VALUE_CHANGE,
   REGISTER_ONPAID_CHANGE,
+  REGISTER_SUCCESS,
+  REGISTER_LOADER,
+  REGISTER_UPLOAD_ERROR,
+  REGISTER_RESET,
 } from './types';
 
 import {BASE_URL} from '../constants/Constants';
@@ -42,12 +47,20 @@ export const registerAccessEventLists = () => {
   };
 };
 
+export const registerResetProps = (list, selectedValue, selectedFees) => {
+  return {
+    type: REGISTER_RESET,
+    selectedValue: selectedValue,
+    selectedFees: selectedFees,
+    payload: list,
+  };
+};
+
 export const registerOnPaidChange = (text, ogValue) => {
   let paid = 0;
   let rem = 0;
-  //   console.log('Remaining   ', ogValue);
+
   if (text === '') {
-    // console.log(paid, '  ', rem);
     return {
       type: REGISTER_ONPAID_CHANGE,
       paid: 0,
@@ -61,7 +74,6 @@ export const registerOnPaidChange = (text, ogValue) => {
     rem = parseInt(ogValue, 10) - parseInt(text, 10);
     paid = parseInt(text, 10);
   }
-  //   console.log(paid, '  ', rem);
   return {
     type: REGISTER_ONPAID_CHANGE,
     paid: paid,
@@ -102,5 +114,82 @@ export const registerCollegeChanged = (text) => {
   return {
     type: REGISTER_COLLEGE_CHANGED,
     payload: text,
+  };
+};
+
+export const registerButtonPressed = (
+  name,
+  email,
+  phone,
+  college,
+  event,
+  paid,
+  remaining,
+) => {
+  return (dispatch) => {
+    dispatch({type: REGISTER_LOADER});
+    const enteredby = AsyncStorage.getItem('USERNAME');
+    // axois
+    //   .post(BASE_URL + '/model.php', {
+    //     name,
+    //     email,
+    //     phone,
+    //     college,
+    //     event,
+    //     paid,
+    //     remaining,
+    //     enteredby,
+    //   })
+    // var formData = new FormData();
+    // formData.append('name', name);
+    // formData.append('email', email);
+    // formData.append('phone', phone);
+    // formData.append('college', college);
+    // formData.append('event', event);
+    // formData.append('paid', paid);
+    // formData.append('remaining', remaining);
+    // formData.append('enteredby', enteredby);
+    const requestBody = {
+      name: name,
+      email: email,
+      phone,
+      phone,
+      college,
+      college,
+      event: event,
+      paid: paid,
+      remaining: remaining,
+      enteredby: enteredby,
+    };
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+    // console.log(formData);
+    // axois({
+    //   method: 'post',
+    //   url: BASE_URL + '/model.php',
+    //   data: {
+    //     formData,
+    //   },
+    //   headers: {'Content-Type': 'multipart/form-data'},
+    // })
+
+    axois
+      .post(BASE_URL + '/model.php', qs.stringify(requestBody), config)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status === 'SUCCESS') {
+          dispatch({type: REGISTER_SUCCESS});
+        } else {
+          dispatch({type: REGISTER_UPLOAD_ERROR});
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({type: REGISTER_UPLOAD_ERROR});
+      });
   };
 };

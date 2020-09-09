@@ -7,6 +7,10 @@ import {
   REGISTER_ERROR,
   REGISTER_ONPICKER_VALUE_CHANGE,
   REGISTER_ONPAID_CHANGE,
+  REGISTER_LOADER,
+  REGISTER_SUCCESS,
+  REGISTER_UPLOAD_ERROR,
+  REGISTER_RESET,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,10 +24,33 @@ const INITIAL_STATE = {
   selectedFees: 0,
   paid: 0,
   remaining: 0,
+  loading: false,
+  error: false,
+  isSuccess: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case REGISTER_RESET: {
+      return {
+        ...INITIAL_STATE,
+        lists: action.payload,
+        eventReceived: true,
+        selectedValue: action.selectedValue,
+        selectedFees: action.selectedFees,
+        remaining: parseInt(action.selectedFees, 10),
+      };
+    }
+
+    case REGISTER_LOADER:
+      return {...state, loading: true, isSuccess: false, error: false};
+
+    case REGISTER_UPLOAD_ERROR:
+      return {...state, loading: false, error: true, isSuccess: false};
+
+    case REGISTER_SUCCESS:
+      return {...state, loading: false, isSuccess: true, error: false};
+
     case REGISTER_NAME_CHANGED:
       return {...state, name: action.payload};
 

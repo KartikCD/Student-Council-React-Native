@@ -33,3 +33,7 @@ export const REGISTER_ONLIST_ACCESS = 'register_onlist_access';
 export const REGISTER_ERROR = 'register_error';
 export const REGISTER_ONPICKER_VALUE_CHANGE = 'register_onpicker_value_change';
 export const REGISTER_ONPAID_CHANGE = 'register_onpaid_change';
+export const REGISTER_LOADER = 'register_loader';
+export const REGISTER_UPLOAD_ERROR = 'register_upload_error';
+export const REGISTER_SUCCESS = 'register_success';
+export const REGISTER_RESET = 'register_reset';

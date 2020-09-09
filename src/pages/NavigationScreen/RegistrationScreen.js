@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, StyleSheet, Picker} from 'react-native';
+import {View, Text, ScrollView, StyleSheet, Picker, Alert} from 'react-native';
 import {connect} from 'react-redux';
-import Toast from 'react-native-toast-native';
 
 import {
   registerNameChanged,
@@ -11,6 +10,8 @@ import {
   registerAccessEventLists,
   registerPickerValueChange,
   registerOnPaidChange,
+  registerButtonPressed,
+  registerResetProps,
 } from '../../actions/';
 
 import {Card, CardSection, Input, Button, Spinner} from '../../components/';
@@ -18,6 +19,27 @@ import {Card, CardSection, Input, Button, Spinner} from '../../components/';
 class RegistrationScreens extends Component {
   componentDidMount() {
     this.props.registerAccessEventLists();
+  }
+
+  onButtonPress() {
+    const {
+      name,
+      email,
+      phone,
+      college,
+      selectedValue,
+      paid,
+      remaining,
+    } = this.props;
+    this.props.registerButtonPressed(
+      name,
+      email,
+      phone,
+      college,
+      selectedValue,
+      paid,
+      remaining,
+    );
   }
 
   renderPickerList() {
@@ -46,6 +68,39 @@ class RegistrationScreens extends Component {
             })}
           </Picker>
         </CardSection>
+      );
+    }
+  }
+
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner size="large" />;
+    } else {
+      return <Button onPress={this.onButtonPress.bind(this)}>Register</Button>;
+    }
+  }
+
+  renderError() {
+    if (this.props.error) {
+      return <Text style={styles.errorTextStyle}>Something went wrong.</Text>;
+    }
+  }
+
+  renderAlert() {
+    if (this.props.isSuccess) {
+      Alert.alert(
+        'Message',
+        'Registration done successfully.',
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              const {lists, selectedFees, selectedValue} = this.props;
+              this.props.registerResetProps(lists, selectedValue, selectedFees);
+            },
+          },
+        ],
+        {cancelable: false},
       );
     }
   }
@@ -135,10 +190,12 @@ class RegistrationScreens extends Component {
             />
           </CardSection>
 
-          <CardSection>
-            <Button>Register</Button>
-          </CardSection>
+          {this.renderError()}
+
+          <CardSection>{this.renderButton()}</CardSection>
         </Card>
+
+        <View>{this.renderAlert()}</View>
       </ScrollView>
     );
   }
@@ -186,6 +243,9 @@ const mapStateToProps = (state) => {
     selectedFees: state.register.selectedFees,
     paid: state.register.paid,
     remaining: state.register.remaining,
+    loading: state.register.loading,
+    error: state.register.error,
+    isSuccess: state.register.isSuccess,
   };
 };
 
@@ -197,6 +257,8 @@ const RegistrationScreen = connect(mapStateToProps, {
   registerAccessEventLists,
   registerPickerValueChange,
   registerOnPaidChange,
+  registerButtonPressed,
+  registerResetProps,
 })(RegistrationScreens);
 
 export {RegistrationScreen};
