@@ -10,6 +10,7 @@ export const FORGOT_PASSWORD_RESET = 'forgot_password_reset';
 export const SCAN_SUCCESS = 'scan_success';
 export const SCAN_DEFAULT = 'scan_default';
 export const SCAN_FAIL = 'scan_fail';
+export const SCAN_RESET = 'scan_reset';
 
 //Login Actions
 export const LOGIN_EMAIL_CHANGED = 'login_email_changed';

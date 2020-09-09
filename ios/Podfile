@@ -4,6 +4,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '10.0'
 
 target 'StudentCouncil' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
@@ -17,6 +18,8 @@ target 'StudentCouncil' do
   pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
 
   target 'StudentCouncilTests' do
     inherit! :complete
